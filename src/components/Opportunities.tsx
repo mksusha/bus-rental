@@ -27,10 +27,10 @@ export default function Features() {
     return (
         <section
             id="features-section"
-            className="py-20 max-w-[1400px] mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8"
+            className="py-20 max-w-[1400px] mx-auto w-[90%] grid grid-cols-1 md:grid-cols-2 gap-8"
         >
             {/* Левая колонка */}
-            <div className="md:sticky md:top-20 h-fit p-6">
+            <div className="md:sticky md:top-20 h-fit p-2 py-5">
                 <h2 className="text-4xl md:text-5xl font-extrabold md:pt-5 mb-6 flex flex-col md:flex-row items-center gap-2 md:gap-2 text-center md:text-left">
                     <span>Наши</span>
                     <span className="bg-blue-500 text-white px-2 py-1 rounded-2xl">возможности</span>

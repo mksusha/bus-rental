@@ -9,7 +9,7 @@ const clients = [
 
 export default function Clients() {
     return (
-        <section className="relative md:py-20 bg-white">
+        <section className="relative pt-5 pb-20 md:py-20 bg-white">
             <div className="max-w-[1400px] mx-auto px-6 text-center">
                 <h2 className="text-3xl md:text-5xl font-extrabold mb-8">
                     Наши <span className="bg-blue-500 text-white px-2 rounded-2xl">клиенты</span>

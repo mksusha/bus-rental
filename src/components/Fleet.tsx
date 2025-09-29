@@ -38,7 +38,7 @@ export default function Fleet() {
     return (
         <section className="relative max-w-[1400px] m-auto py-16 flex justify-center">
             <div
-                className="w-[95%] rounded-3xl shadow-2xl px-4 md:px-12 py-16 relative overflow-visible"
+                className="w-[90%] rounded-3xl shadow-2xl px-4 md:px-12 py-16 relative overflow-visible"
                 style={{
                     background: "linear-gradient(90deg, #2c62ff 0%, #9695ff 100%)",
                 }}

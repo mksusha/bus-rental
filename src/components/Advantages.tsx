@@ -31,7 +31,7 @@ const advantages = [
 export default function Advantages() {
     return (
         <section className="md:py-20 max-w-[1400px] m-auto bg-white flex justify-center">
-            <div className="w-[90%]  max-w-[1400px]">
+            <div className="w-[95%]  max-w-[1400px]">
                 <h2 className="text-4xl md:text-5xl font-extrabold  mb-4 text-gray-900 text-center">
                     Наши преимущества
                 </h2>

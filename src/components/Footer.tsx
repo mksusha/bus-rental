@@ -3,7 +3,7 @@ import { Phone, Mail, Clock, MapPin, Printer } from 'lucide-react'
 export default function Footer() {
     return (
         <footer
-            className="max-w-[1400px] w-[90%] m-auto text-white rounded-t-3xl"
+            className="max-w-[1400px] w-[95%] m-auto text-white rounded-t-3xl"
             style={{
                 background: "linear-gradient(90deg, #2c62ff 0%, #9695ff 100%)"
             }}

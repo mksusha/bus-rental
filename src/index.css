@@ -27,3 +27,11 @@
 html, body {
   font-family: "Nunito", sans-serif;
 }
+/* Скрыть скроллбар */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE и Edge */
+  scrollbar-width: none; /* Firefox */
+}

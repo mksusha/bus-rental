@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { Menu, X } from "lucide-react"; // иконки для бургера
-import logo from "/bus-logo.svg"; // логотип
+import logo from "/bus-logo.svg";
+import {Link} from "react-router-dom"; // логотип
 
 const Header: React.FC = () => {
     const [mobileOpen, setMobileOpen] = useState(false);
 
     const menuItems = [
-        { label: "Наш автопарк", href: "#autopark" },
+        { label: "Наш автопарк", href: "/park" },
         { label: "О компании", href: "#about" },
         { label: "Контакты", href: "#contacts" },
     ];
@@ -15,13 +16,13 @@ const Header: React.FC = () => {
         <header className="fixed top-4 left-1/2 -translate-x-1/2 w-[90%] max-w-[1400px] bg-white/40 backdrop-blur-md rounded-3xl z-50 border border-gray-200">
             <div className="flex items-center justify-between px-6 py-3">
                 {/* Логотип слева */}
-                <div className="flex-shrink-0">
+                <Link to="/">
                     <img
                         src={logo}
                         alt="Logo"
-                        className="h-8 w-auto transition-transform duration-300 hover:scale-105"
+                        className="h-8 w-auto transition-transform duration-300 hover:scale-105 cursor-pointer"
                     />
-                </div>
+                </Link>
 
                 {/* Меню на десктопе */}
                 <nav className="hidden md:flex space-x-10 font-semibold text-gray-700">

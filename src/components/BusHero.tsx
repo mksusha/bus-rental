@@ -1,6 +1,4 @@
 export default function Hero() {
-    const images = ["/bus2.jpg", "/bus3.jpg", "/bus4.jpg", "/bus5.jpg"];
-
     const features = [
         { svg: "/air.svg", title: "Современные автобусы", subtitle: "с кондиционером" },
         { svg: "/success.svg", title: "Водители с опытом", subtitle: "от 5 лет" },
@@ -9,65 +7,69 @@ export default function Hero() {
     ];
 
     return (
-        <section className="relative  bg-white overflow-hidden mt-20 min-h-[auto] md:min-h-[750px]">
+        <section className="relative bg-white overflow-hidden">
             {/* SVG линия как фон */}
             <img
                 src="/line.svg"
                 alt="line"
-                className="absolute bottom-0 left-0 w-full h-auto z-0 pointer-events-none select-none"
+                className="absolute bottom-0 left-0 w-full h-auto z-0 pointer-events-none select-none opacity-10"
             />
 
             {/* Контент */}
-            <div className="relative z-10 max-w-[95%] mx-auto px-2 pt-12 md:pt-24 pb-12 md:pb-32 text-center">
-                <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-gray-900">
-                    Аренда автобусов <br/>
-                    <span className="text-gray-900">для любых поездок</span>
-                </h1>
-                <p className="mt-4 sm:mt-6 text-base sm:text-lg md:text-lg text-gray-600 max-w-2xl mx-auto">
-                    Удобные и современные автобусы для экскурсий, корпоративов и мероприятий.
-                </p>
+            <div className="relative z-10 max-w-[1400px] mt-16 md:mt-0 w-[95%] mx-auto px-4 md:px-8 pt-10 md:pt-20 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
 
-                <div className="mt-6 sm:mt-8 flex justify-center gap-3">
-                    <button
-                        className="w-full max-w-[160px] sm:w-auto sm:max-w-none sm:px-4 py-3 rounded-2xl bg-blue-500 text-white font-medium flex items-center justify-center gap-2 hover:bg-blue-600 transition">
-                        Наш каталог
-                        <img src="/bus.svg" alt="bus" className="w-5 h-5"/>
-                    </button>
+                {/* Текстовый блок */}
+                <div className="flex flex-col justify-center text-center md:text-left">
+                    <h1 className="text-4xl md:text-6xl font-bold text-gray-900 leading-tight">
+                        Аренда автобусов <br />
+                        <span className="text-gray-900">для любых поездок</span>
+                    </h1>
+                    <p className="mt-4 text-lg  md:text-xl text-gray-700 max-w-lg mx-auto md:mx-0">
+                        Организуем перевозки для экскурсий, корпоративов и мероприятий.
+                        Современные автобусы, комфортные салоны и опытные водители — всё для вашей уверенности в дороге.
+                    </p>
+                    <p className="mt-3 text-lg text-gray-700 max-w-lg mx-auto md:mx-0">
+                        Гибкие условия аренды, честные цены и гарантия подачи транспорта точно в срок.
+                    </p>
 
-                    <button
-                        className="w-full max-w-[160px] sm:w-auto sm:max-w-none sm:px-4 py-3 rounded-2xl bg-white/50 backdrop-blur-md text-gray-700 font-medium border border-gray-300 hover:border-blue-400 hover:text-blue-500 transition">
-                        Узнать цену
-                    </button>
+                    {/* Кнопки */}
+                    <div className="mt-6 flex flex-col sm:flex-row gap-3 w-full sm:w-auto justify-center md:justify-start">
+                        <button
+                            className="w-full sm:w-auto px-6 py-3 rounded-2xl bg-blue-500 text-white font-semibold text-lg flex items-center justify-center gap-2 hover:bg-blue-600 transition shadow-md"
+                        >
+                            Наш каталог
+                            <img src="/bus.svg" alt="bus" className="w-5 h-5" />
+                        </button>
+
+                        <button
+                            className="w-full sm:w-auto px-6 py-3 rounded-2xl bg-white/70 backdrop-blur-md text-gray-800 font-medium border border-gray-300 hover:border-blue-400 hover:text-blue-500 transition shadow-sm"
+                        >
+                            Узнать цену
+                        </button>
+                    </div>
                 </div>
 
-
-                {/* Перекрывающиеся кружки с фото */}
-                <div className="sm:mt-16 mt-8 flex justify-center -space-x-3 sm:-space-x-4 relative z-10">
-                    {images.map((img, idx) => (
-                        <div
-                            key={idx}
-                            className={`relative w-24 sm:w-32 h-24 sm:h-32 rounded-full border-4 overflow-hidden ${
-                                idx === images.length - 1 ? "border-white" : "border-white"
-                            }`}
-                        >
-                            <img src={img} alt={`bus ${idx + 1}`} className="w-full h-full object-cover"/>
-                        </div>
-                    ))}
+                {/* Картинка автобуса */}
+                <div className="flex justify-center md:justify-end">
+                    <img
+                        src="/bus11.png"
+                        alt="bus"
+                        className="max-w-full h-[280px] sm:h-[400px] md:h-[550px] object-contain drop-shadow-2xl"
+                    />
                 </div>
             </div>
 
             {/* Нижние плашки */}
-            <div
-                className="relative max-w-[95%] sm:absolute bottom-0 left-1/2 -translate-x-1/2 w-full px-4 sm:px-6 pb-6 flex flex-col sm:flex-row flex-wrap justify-center gap-4 sm:gap-8 z-10">
+            <div className="relative max-w-[1400px] w-[95%] mx-auto px-4 sm:px-8 py-6 flex flex-col sm:flex-row flex-wrap justify-between gap-4 z-10">
                 {features.map((f, idx) => (
                     <div
                         key={idx}
-                        className="flex-1 sm:flex-none min-w-full sm:min-w-[220px] flex items-center gap-3 bg-white/50 backdrop-blur-md px-5 sm:px-7 py-3 sm:py-4 rounded-2xl shadow-lg text-left"
+                        className="flex-1 min-w-full sm:min-w-[250px] flex items-center gap-3 bg-white/40 backdrop-blur-md px-5 sm:px-7 py-4 rounded-2xl shadow-lg"
                     >
                         <img src={f.svg} alt={f.title} className="w-6 sm:w-8 h-6 sm:h-8" />
                         <div>
-                            <p className="font-semibold text-sm sm:text-lg text-gray-900">{f.title}</p>
-                            <p className="text-gray-700 text-xs sm:text-base">{f.subtitle}</p>
+                            <p className="font-semibold text-lg text-gray-900">{f.title}</p>
+                            <p className="text-gray-700 text-base">{f.subtitle}</p>
                         </div>
                     </div>
                 ))}

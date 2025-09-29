@@ -1,30 +1,47 @@
-import { useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper/modules"; // модули
-import type SwiperClass from "swiper"; // импорт типа для TS
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import type SwiperClass from "swiper";
+import { Link } from "react-router-dom";
+import { supabase } from "../lib/supabaseClient";
+
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
+type Bus = {
+    id: number;
+    name: string;
+    seats: number;
+    image_url: string[] | null;
+};
 
-const buses = [
-    { name: "автобус1", img: "/bus1.jpg", seats: 50 },
-    { name: "автобус2", img: "/bus2.jpg", seats: 50 },
-    { name: "Setra S 315 HDH", img: "/bus3.jpg", seats: 52 },
-    { name: "автобус4", img: "/bus4.jpg", seats: 50 },
-    { name: "автобус5", img: "/bus5.jpg", seats: 50 },
-];
+function generateSlug(name: string) {
+    return name.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
+}
 
 export default function Fleet() {
+    const [buses, setBuses] = useState<Bus[]>([]);
     const prevRef = useRef<HTMLDivElement>(null);
     const nextRef = useRef<HTMLDivElement>(null);
 
+    const fetchBuses = async () => {
+        const { data, error } = await supabase.from("buses").select("*");
+        if (error) console.error(error);
+        else setBuses(data as Bus[]);
+    };
+
+    useEffect(() => {
+        fetchBuses();
+    }, []);
+
     return (
         <section className="relative max-w-[1400px] m-auto py-16 flex justify-center">
-            <div className="w-[95%] rounded-3xl shadow-2xl px-4 md:px-12 py-16 relative overflow-visible"
-                 style={{
-                     background: "linear-gradient(90deg, #2c62ff 0%, #9695ff 100%)"
-                 }}
+            <div
+                className="w-[95%] rounded-3xl shadow-2xl px-4 md:px-12 py-16 relative overflow-visible"
+                style={{
+                    background: "linear-gradient(90deg, #2c62ff 0%, #9695ff 100%)",
+                }}
             >
                 <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-12 text-center">
                     Путешествуйте с удобством
@@ -43,7 +60,7 @@ export default function Fleet() {
                     }}
                     autoplay={{ delay: 4000, disableOnInteraction: false }}
                     pagination={{ clickable: true }}
-                    navigation={true} // включаем навигацию
+                    navigation={true}
                     onBeforeInit={(swiper: SwiperClass) => {
                         const nav = swiper.params.navigation as { prevEl: HTMLElement | null; nextEl: HTMLElement | null };
                         nav.prevEl = prevRef.current;
@@ -51,26 +68,37 @@ export default function Fleet() {
                     }}
                     className="overflow-visible"
                 >
-                    {buses.map((bus, idx) => (
-                        <SwiperSlide key={idx}>
-                            <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-                                <img
-                                    src={bus.img}
-                                    alt={bus.name}
-                                    className="w-full h-56 md:h-64 object-cover grayscale hover:grayscale-0 transition duration-500"
-                                />
-                                <div className="p-6">
-                                    <h3 className="text-xl md:text-2xl font-semibold text-gray-900">{bus.name}</h3>
-                                    <p className="mt-2 text-gray-700 text-base md:text-lg">
-                                        Вместимость: {bus.seats} человек
-                                    </p>
-                                    <button className="mt-4 w-full py-2 rounded-xl bg-blue-500 text-white font-medium hover:bg-blue-600 transition">
-                                        Подробнее
-                                    </button>
+                    {buses.map((bus) => {
+                        const slug = generateSlug(bus.name);
+                        const firstImage =
+                            bus.image_url && bus.image_url.length > 0
+                                ? bus.image_url[0]
+                                : "/bus.svg";
+
+                        return (
+                            <SwiperSlide key={bus.id}>
+                                <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+                                    <img
+                                        src={firstImage}
+                                        alt={bus.name}
+                                        className="w-full h-56 md:h-64 object-cover transition duration-500"
+                                    />
+                                    <div className="p-6">
+                                        <h3 className="text-xl md:text-2xl font-semibold text-gray-900">{bus.name}</h3>
+                                        <p className="mt-2 text-gray-700 text-base md:text-lg">
+                                            Вместимость: {bus.seats} человек
+                                        </p>
+                                        <Link
+                                            to={`/park/${slug}`}
+                                            className="inline-block w-full text-center px-4 py-2 rounded-xl border-2 border-blue-500 text-blue-500 bg-transparent hover:bg-blue-500 hover:text-white transition duration-300 font-semibold mt-3"
+                                        >
+                                            Подробнее
+                                        </Link>
+                                    </div>
                                 </div>
-                            </div>
-                        </SwiperSlide>
-                    ))}
+                            </SwiperSlide>
+                        );
+                    })}
 
                     {/* Кастомные стрелки */}
                     <div

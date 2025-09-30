@@ -38,8 +38,8 @@ export default function FleetSlider({ currentBusId }: FleetSliderProps) {
     if (filteredBuses.length === 0) return null;
 
     return (
-        <div className="max-w-[1400px] w-[90%] mx-auto my-20 px-4">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Наш автопарк</h2>
+        <div className="max-w-[1400px] w-[90%] mx-auto mb-32 my-24 px-4">
+            <h2 className="text-4xl font-bold text-gray-900 mb-14 text-center">Наш автопарк</h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {filteredBuses.map((bus) => {

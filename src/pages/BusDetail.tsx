@@ -74,7 +74,7 @@ export default function BusDetail() {
     return (
         <>
             <Header />
-            <div className=" max-w-[1400px] w-[90%] m-auto  mx-auto mb-10 mt-28 md:mt-40">
+            <div className=" max-w-[1400px] w-[90%] m-auto  mx-auto mb-24 mt-28 md:mt-40">
                 <div className="flex flex-col lg:flex-row gap-8 md:gap-12">
                     {/* Заголовок для мобилки */}
                     <h1 className="text-4xl text-center sm:text-5xl font-bold lg:hidden ">

@@ -22,9 +22,53 @@ export default function RequestBlock() {
         setForm((prev) => ({ ...prev, [name]: value }));
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        alert("Заявка отправлена! Мы скоро с вами свяжемся.");
+
+        if (!form.name || !form.phone || !form.email) {
+            alert("Пожалуйста, заполните обязательные поля: Имя, Телефон и Email");
+            return;
+        }
+
+        try {
+            const formData = new FormData();
+            formData.append("_replyto", form.email);
+            formData.append("_subject", "Заявка на аренду автобуса");
+
+            Object.entries(form).forEach(([key, value]) => {
+                formData.append(key, value);
+            });
+
+            const response = await fetch("https://formspree.io/f/manpollk", {
+                method: "POST",
+                body: formData,
+                headers: { Accept: "application/json" },
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                alert("Заявка успешно отправлена!");
+                setForm({
+                    name: "",
+                    phone: "",
+                    city: "",
+                    from: "",
+                    to: "",
+                    date: "",
+                    time: "",
+                    email: "",
+                    passengers: "",
+                    tripType: "one-way",
+                });
+            } else {
+                console.error(data);
+                alert("Ошибка при отправке. Проверьте правильность заполнения полей.");
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Ошибка при отправке. Попробуйте еще раз.");
+        }
     };
 
     return (
@@ -34,12 +78,9 @@ export default function RequestBlock() {
                 background: "linear-gradient(90deg, #2c62ff 0%, #9695ff 100%)",
             }}
         >
-            <h2 className="text-3xl font-bold text-center mb-3">
-                Хотите заказать автобус?
-            </h2>
-            <p className="text-lg text-center mb-8 opacity-90">
+            <h2 className="text-3xl font-bold text-center mb-8">
                 Заполните заявку, и наш менеджер свяжется с вами в ближайшее время
-            </p>
+            </h2>
 
             <form
                 onSubmit={handleSubmit}
@@ -72,7 +113,20 @@ export default function RequestBlock() {
                         />
                     </div>
 
-                    {/* Город */}
+                    {/* Email */}
+                    <div>
+                        <label className="block mb-2 font-medium text-sm">E-mail *</label>
+                        <input
+                            type="email"
+                            name="email"
+                            value={form.email}
+                            onChange={handleChange}
+                            required
+                            className="w-full border border-gray-300 bg-transparent rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+                        />
+                    </div>
+
+                    {/* Остальные поля */}
                     <div>
                         <label className="block mb-2 font-medium text-sm">Город</label>
                         <input
@@ -84,7 +138,6 @@ export default function RequestBlock() {
                         />
                     </div>
 
-                    {/* Откуда */}
                     <div>
                         <label className="block mb-2 font-medium text-sm">Откуда</label>
                         <input
@@ -96,7 +149,6 @@ export default function RequestBlock() {
                         />
                     </div>
 
-                    {/* Куда */}
                     <div>
                         <label className="block mb-2 font-medium text-sm">Куда</label>
                         <input
@@ -108,7 +160,6 @@ export default function RequestBlock() {
                         />
                     </div>
 
-                    {/* Дата */}
                     <div>
                         <label className="block mb-2 font-medium text-sm">Дата</label>
                         <input
@@ -120,7 +171,6 @@ export default function RequestBlock() {
                         />
                     </div>
 
-                    {/* Время */}
                     <div>
                         <label className="block mb-2 font-medium text-sm">Время</label>
                         <input
@@ -132,19 +182,6 @@ export default function RequestBlock() {
                         />
                     </div>
 
-                    {/* Email */}
-                    <div>
-                        <label className="block mb-2 font-medium text-sm">E-mail</label>
-                        <input
-                            type="email"
-                            name="email"
-                            value={form.email}
-                            onChange={handleChange}
-                            className="w-full border border-gray-300 bg-transparent rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
-                        />
-                    </div>
-
-                    {/* Пассажиры */}
                     <div>
                         <label className="block mb-2 font-medium text-sm">Кол-во пассажиров</label>
                         <input
@@ -163,8 +200,8 @@ export default function RequestBlock() {
                     <label className="block mb-3 font-medium text-sm">Тип поездки</label>
                     <div className="flex flex-wrap gap-6">
                         {[
-                            {value: "one-way", label: "В одну сторону"},
-                            {value: "round-trip", label: "Туда-обратно"},
+                            { value: "В одну сторону", label: "В одну сторону" },
+                            { value: "rТуда-обратно", label: "Туда-обратно" },
                         ].map((option) => (
                             <label
                                 key={option.value}
@@ -197,15 +234,14 @@ export default function RequestBlock() {
 
                 {/* Кнопка */}
                 <div className="mt-10 text-center">
-                    <a
-                        href="#"
+                    <button
+                        type="submit"
                         className="w-full sm:w-auto px-6 py-2 rounded-2xl border-2 border-blue-600 bg-white/10 text-blue-600 font-semibold text-base md:text-lg
-                   hover:bg-blue-600 hover:text-white active:scale-95 transition-all shadow-md text-center inline-block"
+                        hover:bg-blue-600 hover:text-white active:scale-95 transition-all shadow-md"
                     >
                         Оставить заявку
-                    </a>
+                    </button>
                 </div>
-
             </form>
         </div>
     );

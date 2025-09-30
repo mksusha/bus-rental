@@ -1,7 +1,7 @@
 import { Phone, Mail, Clock, MapPin, Printer } from 'lucide-react';
 import { useState } from 'react';
-import RentalModal from './RentalModal';
 import { Link } from 'react-router-dom';
+import RentalModal from './RentalModal';
 
 export default function Footer() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -12,9 +12,7 @@ export default function Footer() {
                 className="max-w-[1400px] w-[95%] m-auto text-white rounded-t-3xl"
                 style={{ background: "linear-gradient(90deg, #2c62ff 0%, #9695ff 100%)" }}
             >
-                {/* Верхняя строка */}
-                <div className="mx-auto flex flex-col md:flex-row items-center md:items-center justify-between gap-6 py-3 px-6 border-b border-white/30 text-center md:text-left">
-                    {/* Логотип */}
+                <div className="mx-auto flex flex-col md:flex-row items-center justify-between gap-6 py-3 px-6 border-b border-white/30 text-center md:text-left">
                     <Link to="/" className="block mt-2 h-14 w-auto">
                         <img
                             src="/bus-logo1.svg"
@@ -23,25 +21,21 @@ export default function Footer() {
                         />
                     </Link>
 
-                    {/* Меню */}
                     <nav className="flex flex-col sm:flex-row gap-4 sm:gap-6 text-sm md:text-base font-medium justify-center items-center">
                         <Link to="/park" className="hover:underline">Наш автопарк</Link>
                         <Link to="/about" className="hover:underline">О компании</Link>
                         <Link to="/contacts" className="hover:underline">Контакты</Link>
                     </nav>
 
-                    {/* Кнопка открыть модалку */}
                     <button
                         onClick={() => setIsModalOpen(true)}
-                        className="inline-block px-4 py-2 rounded-2xl bg-white text-blue-600 font-semibold text-sm md:text-base hover:bg-gray-100 transition shadow-md text-center"
+                        className="inline-block px-4 py-2 rounded-2xl bg-white text-blue-600 font-semibold text-sm md:text-base hover:bg-gray-100 transition shadow-md"
                     >
                         Оставить заявку
                     </button>
                 </div>
 
-                {/* Нижняя часть */}
                 <div className="max-w-[1350px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 py-8 px-6 text-sm md:text-base">
-                    {/* Слева часы + адрес */}
                     <div className="flex flex-col gap-2 items-center md:items-start text-center md:text-left">
                         <div className="flex items-center gap-2">
                             <Clock size={18} />
@@ -54,7 +48,6 @@ export default function Footer() {
                         </div>
                     </div>
 
-                    {/* Справа телефоны, факс и почта */}
                     <div className="flex flex-col gap-2 items-center md:items-start text-center md:text-left">
                         <div className="flex items-center gap-2">
                             <Phone size={18} />
@@ -76,7 +69,6 @@ export default function Footer() {
                 </div>
             </footer>
 
-            {/* Модалка */}
             <RentalModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </>
     );

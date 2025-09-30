@@ -21,12 +21,14 @@ const Header: React.FC = () => {
                     <Link to="/">
                         <img
                             src={logo}
-                            alt="Logo"
+                            alt="Bus Rental Logo"
                             className="h-8 w-auto transition-transform duration-300 hover:scale-105 cursor-pointer"
+                            width={128}
+                            height={32}
+                            loading="lazy"
                         />
                     </Link>
 
-                    {/* Десктоп меню */}
                     <nav className="hidden md:flex space-x-10 font-semibold text-gray-700">
                         {menuItems.map((item, idx) => (
                             <a
@@ -40,7 +42,6 @@ const Header: React.FC = () => {
                         ))}
                     </nav>
 
-                    {/* Кнопка десктоп */}
                     <div className="hidden md:block flex-shrink-0">
                         <button
                             onClick={() => setIsModalOpen(true)}
@@ -50,7 +51,6 @@ const Header: React.FC = () => {
                         </button>
                     </div>
 
-                    {/* Бургер мобильный */}
                     <div className="md:hidden">
                         <button
                             onClick={() => setMobileOpen(!mobileOpen)}
@@ -61,7 +61,6 @@ const Header: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Мобильное меню */}
                 {mobileOpen && (
                     <div className="md:hidden border-t border-gray-200 bg-white/40 backdrop-blur-md rounded-b-xl shadow-lg">
                         <nav className="flex flex-col items-center gap-4 py-6 font-semibold text-gray-700">
@@ -86,7 +85,6 @@ const Header: React.FC = () => {
                 )}
             </header>
 
-            {/* Модалка */}
             <RentalModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </>
     );

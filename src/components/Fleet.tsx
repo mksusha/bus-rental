@@ -25,13 +25,12 @@ export default function Fleet() {
     const prevRef = useRef<HTMLDivElement>(null);
     const nextRef = useRef<HTMLDivElement>(null);
 
-    const fetchBuses = async () => {
-        const { data, error } = await supabase.from("buses").select("*");
-        if (error) console.error(error);
-        else setBuses(data as Bus[]);
-    };
-
     useEffect(() => {
+        async function fetchBuses() {
+            const { data, error } = await supabase.from("buses").select("*");
+            if (error) console.error(error);
+            else setBuses(data as Bus[]);
+        }
         fetchBuses();
     }, []);
 
@@ -39,9 +38,7 @@ export default function Fleet() {
         <section className="relative max-w-[1400px] m-auto py-16 flex justify-center">
             <div
                 className="w-[95%] rounded-3xl shadow-2xl px-4 md:px-12 py-16 relative overflow-visible"
-                style={{
-                    background: "linear-gradient(90deg, #2c62ff 0%, #9695ff 100%)",
-                }}
+                style={{ background: "linear-gradient(90deg, #2c62ff 0%, #9695ff 100%)" }}
             >
                 <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-12 text-center">
                     Путешествуйте с удобством
@@ -54,10 +51,7 @@ export default function Fleet() {
                     modules={[Navigation, Pagination, Autoplay]}
                     spaceBetween={30}
                     slidesPerView={1}
-                    breakpoints={{
-                        768: { slidesPerView: 2 },
-                        1024: { slidesPerView: 3 },
-                    }}
+                    breakpoints={{ 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }}
                     autoplay={{ delay: 4000, disableOnInteraction: false }}
                     pagination={{ clickable: true }}
                     navigation={true}
@@ -70,17 +64,15 @@ export default function Fleet() {
                 >
                     {buses.map((bus) => {
                         const slug = generateSlug(bus.name);
-                        const firstImage =
-                            bus.image_url && bus.image_url.length > 0
-                                ? bus.image_url[0]
-                                : "/bus.svg";
+                        const firstImage = bus.image_url && bus.image_url.length > 0 ? bus.image_url[0] : "/bus.svg";
 
                         return (
                             <SwiperSlide key={bus.id}>
-                                <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+                                <div className="bg-white rounded-2xl overflow-hidden">
                                     <img
                                         src={firstImage}
-                                        alt={bus.name}
+                                        alt={`Автобус ${bus.name}`}
+                                        loading="lazy"
                                         className="w-full h-56 md:h-64 object-cover transition duration-500"
                                     />
                                     <div className="p-6">

@@ -1,4 +1,3 @@
-// src/components/FleetSlider.tsx
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { supabase } from "../lib/supabaseClient";
@@ -25,8 +24,7 @@ export default function FleetSlider({ currentBusId }: FleetSliderProps) {
 
     const fetchBuses = async () => {
         const { data, error } = await supabase.from("buses").select("*");
-        if (error) console.error(error);
-        else setBuses(data as Bus[]);
+        if (!error) setBuses(data as Bus[]);
     };
 
     useEffect(() => {
@@ -44,20 +42,16 @@ export default function FleetSlider({ currentBusId }: FleetSliderProps) {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {filteredBuses.map((bus) => {
                     const slug = generateSlug(bus.name);
-                    const firstImage =
-                        bus.image_url && bus.image_url.length > 0
-                            ? bus.image_url[0]
-                            : "/bus.svg";
+                    const firstImage = bus.image_url && bus.image_url.length > 0 ? bus.image_url[0] : "/bus.svg";
+                    const description = `Аренда автобуса ${bus.name} с водителем. Количество мест: ${bus.seats}, минимальное время заказа: ${bus.min_time} ч, стоимость от ${bus.price} руб./час.`;
 
                     return (
-                        <div
-                            key={bus.id}
-                            className="bg-white rounded-2xl shadow-lg overflow-hidden"
-                        >
+                        <div key={bus.id} className="bg-white rounded-2xl shadow-lg overflow-hidden">
                             <img
                                 src={firstImage}
-                                alt={bus.name}
+                                alt={description}
                                 className="w-full h-48 object-cover"
+                                loading="lazy"
                             />
                             <div className="p-4 flex flex-col gap-2">
                                 <h3 className="font-semibold text-lg md:text-xl text-gray-900">{bus.name}</h3>

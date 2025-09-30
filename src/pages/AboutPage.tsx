@@ -1,6 +1,7 @@
 // src/pages/AboutPage.tsx
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import PageTitle from "../components/PageTitle";
 import { Users, Briefcase, Award, Building2 } from "lucide-react";
 
 export default function AboutPage() {
@@ -13,16 +14,22 @@ export default function AboutPage() {
 
     return (
         <>
+            <PageTitle
+                title="О компании МинБелТранс | Аренда автобусов с водителем"
+                description="МинБелТранс — надежный перевозчик по Беларуси и за её пределами. Узнайте о нашей компании, автопарке, опыте и преимуществах работы с нами."
+            />
+
             <Header />
 
             {/* Основной блок */}
-            <section className="max-w-[1400px] w-[90%] mx-auto mt-2  md:mt-16 py-16 grid grid-cols-1 lg:grid-cols-2 gap-5 md:gap-12 items-center">
-                {/* Картинка (на мобилке первая, на десктопе справа) */}
+            <section className="max-w-[1400px] w-[90%] mx-auto mt-2 md:mt-16 py-16 grid grid-cols-1 lg:grid-cols-2 gap-5 md:gap-12 items-center">
+                {/* Картинка */}
                 <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
                     <img
                         src="/map.jpg"
-                        alt="МинБелТранс"
+                        alt="Автопарк МинБелТранс"
                         className="rounded-3xl w-full max-w-2xl object-cover"
+                        loading="lazy"
                     />
                 </div>
 
@@ -37,7 +44,7 @@ export default function AboutPage() {
                         </p>
                         <p className="text-gray-700 text-lg leading-relaxed">
                             Компания <span className="font-semibold">"МинБелТранс"</span> предоставляет услуги перевозки людей
-                            и услуги по организации перевозок от 17 до 57 пассажиров. Мы на рынке уже более 23 лет,
+                            и организации перевозок от 17 до 57 пассажиров. Мы на рынке уже более 23 лет,
                             обеспечивая качество обслуживания на высшем уровне.
                         </p>
                     </div>
@@ -57,7 +64,7 @@ export default function AboutPage() {
                                 >
                                     {item.icon}
                                 </div>
-                                <h3 className="text-3xl font-bold text-blue-600">{item.value}</h3>
+                                <h2 className="text-3xl font-bold text-blue-600">{item.value}</h2>
                                 <p className="mt-2 text-gray-700 text-base md:text-lg">{item.label}</p>
                             </div>
                         ))}
@@ -65,7 +72,7 @@ export default function AboutPage() {
                 </div>
             </section>
 
-            {/* Остальной текст */}
+            {/* Дополнительная информация */}
             <section className="max-w-[1400px] w-[90%] mx-auto pb-20 space-y-8 text-gray-800">
                 <h2 className="text-2xl font-bold text-gray-900">Почему выбирают нас</h2>
                 <p>

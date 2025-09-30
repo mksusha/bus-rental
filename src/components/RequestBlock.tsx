@@ -100,7 +100,7 @@ export default function RequestBlock() {
                         />
                     </div>
 
-                    {/* Телефон */}
+
                     <div>
                         <label className="block mb-2 font-medium text-sm">Телефон *</label>
                         <input

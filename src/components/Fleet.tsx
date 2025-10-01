@@ -60,12 +60,11 @@ export default function Fleet() {
                         nav.prevEl = prevRef.current;
                         nav.nextEl = nextRef.current;
                     }}
-                    className="overflow-visible"
+                    className="overflow-visible relative fleet-swiper"
                 >
                     {buses.map((bus) => {
                         const slug = generateSlug(bus.name);
                         const firstImage = bus.image_url && bus.image_url.length > 0 ? bus.image_url[0] : "/bus.svg";
-
                         return (
                             <SwiperSlide key={bus.id}>
                                 <div className="bg-white rounded-2xl overflow-hidden">
@@ -109,7 +108,17 @@ export default function Fleet() {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
                     </div>
+
+                    {/* Переопределяем класс пагинации через Tailwind */}
+                    <style>
+                        {`
+        .fleet-swiper .swiper-pagination {
+            bottom: -0.5px !important;
+        }
+        `}
+                    </style>
                 </Swiper>
+
             </div>
         </section>
     );

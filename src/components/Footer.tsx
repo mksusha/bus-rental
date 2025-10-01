@@ -60,7 +60,7 @@ export default function Footer() {
                         </div>
                         <div className="flex items-center gap-2">
                             <Printer size={18}/>
-                            <span>+375 17 373 55 55 (на автомате)</span>
+                            <span>+375 17 373 55 55 </span>
                         </div>
                         <div className="flex items-center gap-2">
                             <Mail size={18}/>

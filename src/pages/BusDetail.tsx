@@ -69,16 +69,15 @@ export default function BusDetail() {
 
     if (!bus) return <div>Загрузка...</div>;
 
-    const description = `Аренда автобуса ${bus.name} с водителем. Количество мест: ${bus.seats}, минимальное время заказа: ${bus.min_time} ч. Удобства: ${
-        bus.toilet ? "Туалет, " : ""
-    }${bus.tea_coffee ? "Чай/Кофе, " : ""}${bus.reclining_seats ? "Раскладывающиеся кресла, " : ""}${
-        bus.ac ? "Кондиционер, " : ""
-    }Багаж: ${bus.luggage || "50*45, 49 ед."}`;
+    const title = `Аренда "${bus.name}" в Минске`;
+    const description = `Аренда пассажирского автобуса "${bus.name}" с профессиональным водителем в Минске. Звоните +375 29 628 90 29.`;
+
+
 
     return (
         <>
             <PageTitle
-                title={`${bus.name} | Аренда автобусов с водителем`}
+                title={title}
                 description={description}
             />
             <Header />

@@ -1,4 +1,4 @@
-// src/pages/AboutPage.tsx
+import { useRef, useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import PageTitle from "../components/PageTitle";
@@ -12,6 +12,20 @@ export default function AboutPage() {
         { value: "100%", label: "качество сервиса", icon: <Award className="w-8 h-8 text-white" /> },
     ];
 
+    const textRef = useRef<HTMLDivElement>(null);
+    const [textHeight, setTextHeight] = useState<number>(0);
+
+    useEffect(() => {
+        const updateHeight = () => {
+            if (textRef.current) {
+                setTextHeight(textRef.current.offsetHeight);
+            }
+        };
+        updateHeight();
+        window.addEventListener("resize", updateHeight);
+        return () => window.removeEventListener("resize", updateHeight);
+    }, []);
+
     return (
         <>
             <PageTitle
@@ -19,38 +33,31 @@ export default function AboutPage() {
                 description="Компания МинБелТранс занимается арендой пассажирских автобусов с водителем. Оплата по безналичному и наличному расчету. Сопроводительные документы."
             />
 
+            <Header/>
 
-            <Header />
+            <section className="max-w-[1400px] w-[90%] mx-auto mt-10 md:mt-16 py-16 grid grid-cols-1 lg:grid-cols-2 gap-5 md:gap-12">
+                <div ref={textRef} className="space-y-6 lg:order-1">
+                    <h1 className="text-4xl md:text-5xl font-bold text-gray-900">О компании</h1>
 
-            {/* Основной блок */}
-            <section className="max-w-[1400px] w-[90%] mx-auto mt-2 md:mt-16 py-16 grid grid-cols-1 lg:grid-cols-2 gap-5 md:gap-12 items-center">
-                {/* Картинка */}
-                <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
-                    <img
-                        src="/map.jpg"
-                        alt="Автопарк МинБелТранс"
-                        className="rounded-3xl w-full max-w-2xl object-cover"
-                        loading="lazy"
-                    />
-                </div>
-
-                {/* Текст + статистика */}
-                <div className="order-2 lg:order-1 space-y-10">
-                    <div className="space-y-6">
-                        <h1 className="text-4xl md:text-5xl font-bold text-gray-900">
-                            О компании
-                        </h1>
-                        <p className="text-lg md:text-xl text-gray-600">
-                            МинБелТранс — надежный перевозчик по Беларуси и за её пределами.
-                        </p>
-                        <p className="text-gray-700 text-lg leading-relaxed">
-                            Компания <span className="font-semibold">"МинБелТранс"</span> предоставляет услуги перевозки людей
-                            и организации перевозок от 17 до 57 пассажиров. Мы на рынке уже более 23 лет,
-                            обеспечивая качество обслуживания на высшем уровне.
-                        </p>
+                    <div className="lg:hidden w-full flex justify-center">
+                        <img
+                            src="/buses.png"
+                            alt="Автопарк МинБелТранс"
+                            className="w-full rounded-3xl object-cover"
+                            loading="lazy"
+                        />
                     </div>
 
-                    {/* Карточки статистики */}
+                    <p className="text-lg md:text-xl text-gray-600">
+                        МинБелТранс — надежный перевозчик по Беларуси и за её пределами.
+                    </p>
+
+                    <p className="text-gray-700 text-lg leading-relaxed">
+                        Компания <span className="font-semibold">"МинБелТранс"</span> предоставляет услуги перевозки
+                        людей и организации перевозок от 17 до 57 пассажиров. Мы на рынке уже более 23 лет,
+                        обеспечивая качество обслуживания на высшем уровне.
+                    </p>
+
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         {stats.map((item, idx) => (
                             <div
@@ -59,9 +66,7 @@ export default function AboutPage() {
                             >
                                 <div
                                     className="absolute top-4 right-4 w-14 h-14 rounded-2xl flex items-center justify-center shadow-md"
-                                    style={{
-                                        background: "linear-gradient(90deg, #2c62ff 0%, #9695ff 100%)",
-                                    }}
+                                    style={{ background: "linear-gradient(90deg, #2c62ff 0%, #9695ff 100%)" }}
                                 >
                                     {item.icon}
                                 </div>
@@ -71,9 +76,18 @@ export default function AboutPage() {
                         ))}
                     </div>
                 </div>
+
+                <div className="hidden lg:flex justify-center lg:justify-end lg:order-2">
+                    <img
+                        src="/buses.png"
+                        alt="Автопарк МинБелТранс"
+                        className="rounded-3xl w-full max-w-2xl object-cover"
+                        style={{ height: textHeight }}
+                        loading="lazy"
+                    />
+                </div>
             </section>
 
-            {/* Дополнительная информация */}
             <section className="max-w-[1400px] w-[90%] mx-auto pb-20 space-y-8 text-gray-800">
                 <h2 className="text-2xl font-bold text-gray-900">Почему выбирают нас</h2>
                 <p>
@@ -102,7 +116,7 @@ export default function AboutPage() {
                 </p>
             </section>
 
-            <Footer />
+            <Footer/>
         </>
     );
 }

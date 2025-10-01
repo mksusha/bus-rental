@@ -10,7 +10,7 @@ type Bus = {
     price: number;
     driver_exp: number;
     min_time: number;
-    image_url: string[] | null; // массив фото
+    image_url: string[] | null;
     toilet: boolean;
     tea_coffee: boolean;
     reclining_seats: boolean;
@@ -29,8 +29,8 @@ type FormState = {
     price: number | null;
     driverExp: number | null;
     minTime: number | null;
-    images: File[];          // новые фото для загрузки
-    existingImages: string[]; // уже загруженные фото при редактировании
+    images: File[];
+    existingImages: string[];
     toilet: boolean;
     tea_coffee: boolean;
     reclining_seats: boolean;
@@ -56,7 +56,6 @@ export default function AddBusForm({ onAdded, busToEdit }: AddBusFormProps) {
 
     const [loading, setLoading] = useState(false);
 
-    // Заполняем форму при редактировании
     useEffect(() => {
         if (busToEdit) {
             setForm({
@@ -90,11 +89,11 @@ export default function AddBusForm({ onAdded, busToEdit }: AddBusFormProps) {
     };
 
     const removeExistingImage = (url: string) => {
-        setForm((s) => ({ ...s, existingImages: s.existingImages.filter(u => u !== url) }));
+        setForm((s) => ({ ...s, existingImages: s.existingImages.filter((u) => u !== url) }));
     };
 
     const removeNewFile = (file: File) => {
-        setForm((s) => ({ ...s, images: s.images.filter(f => f !== file) }));
+        setForm((s) => ({ ...s, images: s.images.filter((f) => f !== file) }));
     };
 
     const uploadImages = async (files: File[]): Promise<string[]> => {
@@ -139,19 +138,21 @@ export default function AddBusForm({ onAdded, busToEdit }: AddBusFormProps) {
                     .eq("id", busToEdit.id);
                 if (error) throw error;
             } else {
-                const { error } = await supabase.from("buses").insert([{
-                    name: form.name,
-                    seats: form.seats,
-                    price: form.price,
-                    driver_exp: form.driverExp,
-                    min_time: form.minTime,
-                    image_url: allUrls,
-                    toilet: form.toilet,
-                    tea_coffee: form.tea_coffee,
-                    reclining_seats: form.reclining_seats,
-                    ac: form.ac,
-                    luggage: form.luggage,
-                }]);
+                const { error } = await supabase.from("buses").insert([
+                    {
+                        name: form.name,
+                        seats: form.seats,
+                        price: form.price,
+                        driver_exp: form.driverExp,
+                        min_time: form.minTime,
+                        image_url: allUrls,
+                        toilet: form.toilet,
+                        tea_coffee: form.tea_coffee,
+                        reclining_seats: form.reclining_seats,
+                        ac: form.ac,
+                        luggage: form.luggage,
+                    },
+                ]);
                 if (error) throw error;
             }
 
@@ -182,110 +183,148 @@ export default function AddBusForm({ onAdded, busToEdit }: AddBusFormProps) {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-4 max-w-md">
-            <input
-                name="name"
-                value={form.name}
-                onChange={handleChange}
-                placeholder="Название"
-                className="w-full p-2 border rounded"
-            />
-            <input
-                name="seats"
-                value={form.seats ?? ""}
-                type="number"
-                onChange={handleChange}
-                placeholder="Кол-во мест"
-                className="w-full p-2 border rounded"
-            />
-            <input
-                name="price"
-                value={form.price ?? ""}
-                type="number"
-                onChange={handleChange}
-                placeholder="Стоимость в час"
-                className="w-full p-2 border rounded"
-            />
-            <input
-                name="driverExp"
-                value={form.driverExp ?? ""}
-                type="number"
-                onChange={handleChange}
-                placeholder="Опыт водителя в годах"
-                className="w-full p-2 border rounded"
-            />
-            <input
-                name="minTime"
-                value={form.minTime ?? ""}
-                type="number"
-                onChange={handleChange}
-                placeholder="Мин. время заказа в часах"
-                className="w-full p-2 border rounded"
-            />
-            <input
-                name="images"
-                type="file"
-                accept="image/*"
-                multiple
-                onChange={handleChange}
-                className="w-full"
-            />
+        <form onSubmit={handleSubmit} className="space-y-6 max-w-[1400px] mx-auto p-6 bg-white rounded-xl shadow-md">
+            <h2 className="text-2xl font-semibold text-gray-800">{busToEdit ? "Редактировать автобус" : "Добавить автобус"}</h2>
 
-            {/* Превью фото */}
-            <div className="flex flex-wrap gap-2">
-                {form.existingImages.map(url => (
-                    <div key={url} className="relative">
-                        <img src={url} className="w-24 h-24 object-cover rounded" />
-                        <button
-                            type="button"
-                            onClick={() => removeExistingImage(url)}
-                            className="absolute top-0 right-0 bg-red-600 text-white rounded-full w-5 h-5 text-xs"
-                        >
-                            ×
-                        </button>
+            {/* Основная информация */}
+            <div className="space-y-4">
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Название автобуса</label>
+                    <input
+                        name="name"
+                        value={form.name}
+                        onChange={handleChange}
+                        placeholder="Например: Mercedes Sprinter"
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    />
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Количество мест</label>
+                        <input
+                            name="seats"
+                            value={form.seats ?? ""}
+                            type="number"
+                            onChange={handleChange}
+                            placeholder="25"
+                            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        />
                     </div>
-                ))}
-                {form.images.map(file => (
-                    <div key={file.name} className="relative">
-                        <img src={URL.createObjectURL(file)} className="w-24 h-24 object-cover rounded" />
-                        <button
-                            type="button"
-                            onClick={() => removeNewFile(file)}
-                            className="absolute top-0 right-0 bg-red-600 text-white rounded-full w-5 h-5 text-xs"
-                        >
-                            ×
-                        </button>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Стоимость в час</label>
+                        <input
+                            name="price"
+                            value={form.price ?? ""}
+                            type="number"
+                            onChange={handleChange}
+                            placeholder="1000"
+                            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        />
                     </div>
-                ))}
-            </div>
+                </div>
 
-            <div className="flex flex-col gap-2">
-                <label>
-                    <input type="checkbox" name="toilet" checked={form.toilet} onChange={handleChange} /> Туалет
-                </label>
-                <label>
-                    <input type="checkbox" name="tea_coffee" checked={form.tea_coffee} onChange={handleChange} /> Чай/Кофе
-                </label>
-                <label>
-                    <input type="checkbox" name="reclining_seats" checked={form.reclining_seats} onChange={handleChange} /> Раскладывающиеся кресла
-                </label>
-                <label>
-                    <input type="checkbox" name="ac" checked={form.ac} onChange={handleChange} /> Кондиционер
-                </label>
-            </div>
+                <div className="grid grid-cols-2 gap-4">
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Опыт водителя (лет)</label>
+                        <input
+                            name="driverExp"
+                            value={form.driverExp ?? ""}
+                            type="number"
+                            onChange={handleChange}
+                            placeholder="5"
+                            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Мин. время заказа (часы)</label>
+                        <input
+                            name="minTime"
+                            value={form.minTime ?? ""}
+                            type="number"
+                            onChange={handleChange}
+                            placeholder="2"
+                            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        />
+                    </div>
+                </div>
 
-            <textarea
-                name="luggage"
-                value={form.luggage}
-                onChange={handleChange}
-                placeholder="Описание багажа"
-                className="w-full p-2 border rounded"
-            />
+                {/* Фото */}
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Фото автобуса</label>
+                    <input
+                        name="images"
+                        type="file"
+                        accept="image/*"
+                        multiple
+                        onChange={handleChange}
+                        className="w-full text-sm text-gray-600"
+                    />
+
+                    <div className="flex flex-wrap gap-2 mt-3">
+                        {form.existingImages.map((url) => (
+                            <div key={url} className="relative group">
+                                <img src={url} className="w-24 h-24 object-cover rounded-lg border" />
+                                <button
+                                    type="button"
+                                    onClick={() => removeExistingImage(url)}
+                                    className="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 text-xs opacity-0 group-hover:opacity-100 transition"
+                                >
+                                    ×
+                                </button>
+                            </div>
+                        ))}
+                        {form.images.map((file) => (
+                            <div key={file.name} className="relative group">
+                                <img src={URL.createObjectURL(file)} className="w-24 h-24 object-cover rounded-lg border" />
+                                <button
+                                    type="button"
+                                    onClick={() => removeNewFile(file)}
+                                    className="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 text-xs opacity-0 group-hover:opacity-100 transition"
+                                >
+                                    ×
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Опции */}
+                <div className="grid grid-cols-2 gap-4 mt-4 p-4 border rounded-lg bg-gray-50">
+                    <label className="flex items-center gap-2">
+                        <input type="checkbox" name="toilet" checked={form.toilet} onChange={handleChange} className="w-4 h-4" />
+                        Туалет
+                    </label>
+                    <label className="flex items-center gap-2">
+                        <input type="checkbox" name="tea_coffee" checked={form.tea_coffee} onChange={handleChange} className="w-4 h-4" />
+                        Чай/Кофе
+                    </label>
+                    <label className="flex items-center gap-2">
+                        <input type="checkbox" name="reclining_seats" checked={form.reclining_seats} onChange={handleChange} className="w-4 h-4" />
+                        Раскладывающиеся кресла
+                    </label>
+                    <label className="flex items-center gap-2">
+                        <input type="checkbox" name="ac" checked={form.ac} onChange={handleChange} className="w-4 h-4" />
+                        Кондиционер
+                    </label>
+                </div>
+
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Описание багажа</label>
+                    <textarea
+                        name="luggage"
+                        value={form.luggage}
+                        onChange={handleChange}
+                        placeholder="Например: большой багаж до 2 мест"
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    />
+                </div>
+            </div>
 
             <button
                 type="submit"
                 disabled={loading}
-                className="px-4 py-2 rounded bg-blue-600 text-white"
+                className="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
             >
                 {loading ? "Загрузка..." : busToEdit ? "Обновить автобус" : "Добавить автобус"}
             </button>

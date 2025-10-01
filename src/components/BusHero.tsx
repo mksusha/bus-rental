@@ -62,22 +62,25 @@ export default function BusHero({ openModal }: BusHeroProps) {
                 <div className="flex justify-center md:justify-end">
                     <img
                         src="/bus11.png"
-                        alt="Комфортабельный автобус для аренды"
+                        alt="аренда автобусов"
+                        title="аренда автобусов Минск"
                         className="max-w-full h-[280px] sm:h-[400px] md:h-[550px] object-contain drop-shadow-2xl"
                     />
+
                 </div>
             </div>
 
-            <div className="relative max-w-[1400px] w-[95%] mx-auto px-4 sm:px-8 py-6 flex flex-col sm:flex-row flex-wrap justify-between gap-4 z-10">
-                {features.map((f, idx) => (
+            <div
+                className="relative max-w-[1400px] w-[95%] mx-auto px-4 sm:px-8 py-6 flex flex-col sm:flex-row flex-wrap justify-between gap-4 z-10">
+            {features.map((f, idx) => (
                     <div
                         key={idx}
                         className="flex-1 min-w-full sm:min-w-[250px] flex items-center gap-3 bg-white/40 backdrop-blur-md px-5 sm:px-7 py-4 rounded-2xl shadow-lg"
                     >
                         <img src={f.svg} alt={f.title} className="w-6 sm:w-8 h-6 sm:h-8" />
                         <div>
-                            <h2 className="font-semibold text-lg text-gray-900">{f.title}</h2>
-                            <p className="text-gray-700 text-base">{f.subtitle}</p>
+                            <h3 className="font-semibold text-lg text-gray-900">{f.title}</h3>
+                            <h3 className="text-gray-700 text-base">{f.subtitle}</h3>
                         </div>
                     </div>
                 ))}

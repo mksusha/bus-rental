@@ -149,15 +149,28 @@ export default function RentalModal({ isOpen, onClose }: RentalModalProps) {
 
                     {/* Контакты */}
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-                        <Input placeholder="Введите имя" name="firstName" value={formData.firstName} onChange={handleChange} required />
+                        <Input
+                            placeholder="Имя *"
+                            name="firstName"
+                            value={formData.firstName}
+                            onChange={handleChange}
+                            required
+                        />
                         <Input placeholder="Введите фамилию" name="lastName" value={formData.lastName} onChange={handleChange} />
                         <Input placeholder="Введите отчество" name="middleName" value={formData.middleName} onChange={handleChange} />
                     </div>
 
                     {/* Телефон + Email */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                        <Input placeholder="Введите телефон" name="phone" value={formData.phone} onChange={handleChange} type="tel" required />
-                        <Input placeholder="Введите email" name="email" value={formData.email} onChange={handleChange} type="email" required />
+                        <Input
+                            placeholder="Телефон *"
+                            name="phone"
+                            value={formData.phone}
+                            onChange={handleChange}
+                            type="tel"
+                            required
+                        />
+                        <Input placeholder="Введите email" name="email" value={formData.email} onChange={handleChange} type="email" />
                     </div>
 
                     {/* Физ/юр */}

@@ -31,7 +31,7 @@ export default function Features() {
         >
             {/* Левая колонка с текстом */}
             <div className="md:sticky md:top-20 h-fit py-5 space-y-4">
-                <h2 className="text-4xl md:text-4xl font-extrabold leading-tight text-center md:text-left ">
+                <h2 className="text-3xl md:text-4xl font-extrabold leading-tight text-center md:text-left ">
                     Аренда автобусов по Беларуси. <br/> Уже{" "}
                     <span className="bg-blue-500 text-white px-2 rounded-2xl">15 лет</span> с заботой о вас!
                 </h2>

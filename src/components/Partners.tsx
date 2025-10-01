@@ -29,7 +29,7 @@ export default function Clients() {
                 </p>
 
                 {/* Первый ряд */}
-                <div className="flex justify-center items-center mb-10git add .
+                <div className="flex justify-center items-center mb-8
 ">
                     {clients.map((logo, idx) => (
                         <div
